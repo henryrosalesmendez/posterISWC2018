@@ -68,108 +68,110 @@
 %
 %\institute{Center for Semantic Web Research, DCC, University of Chile \\
 %\texttt{\{hrosales,bpoblete,ahogan\}@dcc.uchile.cl}}
-\institute{Millenium Institute for Foundational Research on Data\\Department of Computer Science, University of Chile \\
-\texttt{\{hrosales,ahogan,bpoblete\}@dcc.uchile.cl}}
+\institute{Millenium Institute for Foundational Research on Data\\Department of Computer Science, University of Chile 
+%	\\\texttt{\{hrosales,ahogan,bpoblete\}@dcc.uchile.cl}
+}
 
 %-----------------------------------------
 \maketitle              % typeset the title of the contribution
 \begin{abstract}
-Entity Linking (EL) associates the entities mentioned in a given input text with their corresponding knowledge-base (KB) entries. A recent EL trend is towards multilingual approaches. However, one may ask: are multilingual approaches necessary with recent advancements in machine translation? Could we not simply focus on supporting one language in the EL system and translate the input text to that language? We present experiments along these lines comparing multilingual EL systems with their results over machine translated text.
+Entity Linking (EL) associates the entities mentioned in a given input text with their corresponding knowledge-base (KB) entries. A recent EL trend is towards multilingual approaches. However, one may ask: are multilingual EL approaches necessary with recent advancements in machine translation? Could we not simply focus on supporting one language in the EL system and translate the input text to that language? We present experiments along these lines comparing multilingual EL systems with their results over machine translated text.
 \end{abstract}
-
-
 
 
 %---------------------
 \section{Introduction}
 \label{sec:intro}
 
-Entity Linking (EL) is a task of Information Extraction that associates the entities mentioned in a given input text with their corresponding knowledge-base (KB) entries. For instance, taking Wikidata as a target KB, for the input text ``\textit{Michael Jackson was born in Gary, Indiana}'', we can link \textit{Michael Jackson} with the Wikidata identifier \url{wd:Q2831}. There are various challenges associated with EL. The first is that one entity mention can refer to several identifiers; for instance, \url{wd:Q2831} is not the only person in Wikidata with the label \textit{Michael Jackson}: other people with the same name -- e.g., \url{wd:Q167877}, \url{wd:Q6831554}, and \url{wd:Q3856193}) -- exist in the KB, and hence we need to disambiguate entity mentions. On the other hand, the same entity (\url{wd:Q2831}) can be referenced by more than one entity mention, for instance, ``\textit{Michael Jackson}'', ``\textit{Michael J. Jackson}'', ``\textit{Jackson}'', ``\textit{King of Pop}'', etc., can refer to \url{wd:Q2831}.
+Entity Linking (EL) associates the entities mentioned in a given input text with their corresponding knowledge-base (KB) identifiers; e.g., taking Wikidata as a target KB, for the input text ``\textit{Michael Jackson was born in Gary, Indiana}'', we can link \textit{Michael Jackson} with the Wikidata identifier \url{wd:Q2831}. However, multiple KB entities may have the same label; e.g., \url{wd:Q167877}, \url{wd:Q6831554}, and \url{wd:Q3856193} are all identifiers for people called \textit{Michael Jackson} in Wikidata. On the other hand, the same entity can be mentioned multiple ways, e.g., ``\textit{Michael J. Jackson}'', ``\textit{Jackson}'', ``\textit{King of Pop}'', etc., can refer to \url{wd:Q2831}.
 
-Another practical challenge is being able to cope with input texts from various languages. While many EL approaches have been proposed down through the years, only recently have multilingual EL approaches~\cite{KIM-popov2004kim,daiber2013improving,Babelfy14,WikiMe16} -- that can be explicitly configured for various input languages -- become more popular, taking advantage in many cases of the increasing availability of KBs with multilingual labels (such as BabelNet, DBpedia, Wikidata, Wikipedia, etc.). In order to support multiple languages, an EL approach has three main options: (1) employ language-agnostic components that can work with respect to any KB that has labels in the required language~\cite{KIM-popov2004kim,daiber2013improving}; however, this approach precludes the possibility of using many linguistic components -- such as Part-Of-Speech (POS) taggers, dependency parsers, etc. -- that are tied to a language but can help improve EL quality; (2) include language-specific components that may improve EL quality, but for a variety of languages, such as POS taggers for various languages~\cite{Babelfy-moro2014entity}; (3) focus on supporting one language, but employ external machine translation approaches to translate the input text to the given language~\cite{Monahan2011,Cassidy2012}.
-
-Thus far, there are few studies evaluating multilingual EL. Hence, in our paper accepted for the Resource Track at ISWC~\cite{ourISWC}, we propose a multilingual EL benchmark and use it to perform experiments in order to study the behaviour of state-of-the-art multilingual approaches for five languages: English, French, German, Italian, and Spanish. We call our dataset VoxEL; a particular design goal of the dataset is to have (insofar as possible) the same text in different languages, and in particular, the same annotations per sentence across languages. Thus performance across languages -- not just systems -- can be compared directly. We also compare the results of multilingual EL systems with what would be possible using a state-of-the-art machine translation approach (Google Translate) to translate the text to English (the primary language supported by most tools). We refer the reader to our Resource Track paper~\cite{ourISWC} for more details.
+Another practical challenge is being able to cope with input texts from various languages. While many EL approaches have been proposed down through the years, only recently have multilingual EL approaches -- configurable for various input languages -- become more popular (e.g.,~\cite{ferragina2010tagme,daiber2013improving,Babelfy-moro2014entity,freme-ner2016}). 
+%In order to support multiple languages, an EL approach has three main options: (1) employ language-agnostic components that can work with respect to any KB that has labels in the required language~\cite{KIM-popov2004kim,daiber2013improving}; however, this approach precludes the possibility of using many linguistic components -- such as Part-Of-Speech (POS) taggers, dependency parsers, etc. -- that are tied to a language but can help improve EL quality; (2) include language-specific components that may improve EL quality, but for a variety of languages, such as POS taggers for various languages~\cite{Babelfy-moro2014entity}; (3) focus on supporting one language, but employ external machine translation approaches to translate the input text to the given language~\cite{Monahan2011,Cassidy2012}.
+%
+ Despite this trend, there are few studies evaluating multilingual EL. Hence, in our paper accepted for the Resource Track at ISWC~\cite{ourISWC}, we propose a multilingual EL benchmark and use it to perform experiments in order to study the behaviour of state-of-the-art multilingual approaches for five languages: English, French, German, Italian, and Spanish. We call our dataset VoxEL; a particular design goal of the dataset is to have (insofar as possible) the same text in different languages, and in particular, the same annotations per sentence across languages. Thus performance across languages -- not just systems -- can be compared directly. We also compare the results of multilingual EL systems with what would be possible using a state-of-the-art machine translation approach (Google Translate) to translate the text to English (the primary language supported by most tools). We refer the reader to our Resource Track paper~\cite{ourISWC} for more details.
 
 In this poster, we present some additional results omitted from the full paper for reasons of space. More specifically, the poster focuses on the question of how an \textit{a priori} machine translation process compares with multilingual EL approaches, contributing novel results using VoxEL to evaluate EL performance using machine translation of the input to languages other than English. More generally, in the poster session, we would like to discuss with interested attendees the interplay between multilingual EL and machine translation; the results presented in this short paper provide important insights on this particular topic.
 
 
 %-----------------------------------------
-\section{Multilingual Entity Linking}
+\section{Evaluating Multilingual Entity Linking Approaches}
 
-For a given text input with a set of entities mentioned $M$, and a KB with a set of identifiers $E$ and associated metadata, the EL task involves associating (or linking) each $m\in{}M$ with a corresponding entity $e\in{}E$. This EL process is commonly divided into two main phases: Entity Recognition (ER) and Entity Disambiguation (ED). The first one has the goal of identifying the entities mentions in the text. These identified entity mentions are passed to the second phase where each of them is disambiguated and linked with a KB identifier.
+%For a given text input with a set of entities mentioned $M$, and a KB with a set of identifiers $E$ and associated metadata, the EL task involves associating (or linking) each $m\in{}M$ with a corresponding entity $e\in{}E$. This EL process is commonly divided into two main phases: Entity Recognition (ER) and Entity Disambiguation (ED). The first one has the goal of identifying the entities mentions in the text. These identified entity mentions are passed to the second phase where each of them is disambiguated and linked with a KB identifier.
  
-A multilingual EL system is further characterised by accepting not only an input text and a KB, but also an identifier for the language of the input text to be able to configure itself accordingly.\footnote{Of course, an EL approach that can detect the language from the input text automatically and configure itself accordingly should also be considered a multilingual EL approach, though we are not aware of such a system.} We refer to our previous work~\cite{ourLD4ID2017,ourISWC} for further details on these systems. In this work, we evaluate four multilingual EL systems that provide public APIs. Details of the evaluated systems are presented in Table \ref{tab:multilingual_approaches}, where we present the year of publication, and the languages for which languages are evaluated in the publication (we note that the system may support more languages than evaluated). We observe that all systems support English, and that other languages evaluated are European in origin.
+A multilingual EL system is characterised by being configurable for multiple input languages. In this work, we evaluate four multilingual EL systems with public APIs, namely \textit{Babelfy}~\cite{Babelfy-moro2014entity}, \textit{DBpedia Spotlight}~\cite{daiber2013improving}, \textit{FREME}~\cite{freme-ner2016} and \textit{TagME}~\cite{ferragina2010tagme}. For reasons of space, we refer to our previous work~\cite{ourLD4ID2017,ourISWC} for further details on these systems and other multilingual EL systems proposed in the literature.
+
+%Details of the evaluated systems are presented in Table \ref{tab:multilingual_approaches}, where we present the year of publication, and the languages for which languages are evaluated in the publication (we note that the system may support more languages than evaluated). We observe that all systems support English, and that other languages evaluated are European in origin.
 
 
-\begin{table}[t!]
-	\centering
-	\caption{Overview of multilingual EL approaches evaluated in our experiments.}
-	\label{tab:multilingual_approaches}
-	\setlength{\tabcolsep}{3pt}
-	\begin{tabular}{lcccccr}
-		\toprule
-		\textbf{Name} &  \textbf{Year} & \textbf{Evaluated Languages} & \textbf{API}\\ \midrule
-		
-%		KIM \cite{KIM-popov2004kim} & 2004 &English, French, Spanish&\xmark&\cmark\\\midrule
-        
-        TagME \cite{ferragina2010tagme} & 2010 & English, German, Dutch & \cmark\\\midrule
-		
-%		SDA \cite{SDA-charton2011automatic}  & 2011 &English, French&\xmark&\xmark\\\midrule
+%\begin{table}[t!]
+%	\centering
+%	\caption{Overview of multilingual EL approaches evaluated in our experiments.}
+%	\label{tab:multilingual_approaches}
+%	\setlength{\tabcolsep}{3pt}
+%	\begin{tabular}{lcccccr}
+%		\toprule
+%		\textbf{Name} &  \textbf{Year} & \textbf{Evaluated Languages} & \textbf{API}\\ \midrule
+%		
+%%		KIM \cite{KIM-popov2004kim} & 2004 &English, French, Spanish&\xmark&\cmark\\\midrule
 %        
-%        \textcolor{blue}{Monahan et al.}~\cite{Monahan2011} & 2011 & English, Chinese&\cmark & \xmark\\\midrule 
+%        TagME \cite{ferragina2010tagme} & 2010 & English, German, Dutch & \cmark\\\midrule
 %		
-%		ualberta \cite{guo2012ualberta}& 2012 &English, Chinese&\xmark&\xmark\\\midrule
+%%		SDA \cite{SDA-charton2011automatic}  & 2011 &English, French&\xmark&\xmark\\\midrule
+%%        
+%%        \textcolor{blue}{Monahan et al.}~\cite{Monahan2011} & 2011 & English, Chinese&\cmark & \xmark\\\midrule 
+%%		
+%%		ualberta \cite{guo2012ualberta}& 2012 &English, Chinese&\xmark&\xmark\\\midrule
+%%		
+%%		HITS \cite{fahrni2012hits} & 2012 & English, Spanish, Chinese&\xmark&\xmark\\\midrule
+%%		
+%%		THD \cite{THD-dojchinovski2012recognizing}  & 2012 &English, German, Dutch&\xmark&\cmark\\\midrule 
+%%        
+%%        \textcolor{blue}{Cassidy et al.}~\cite{Cassidy2012} & 2012  &English, Chinese&\cmark \xmark\\\midrule 
 %		
-%		HITS \cite{fahrni2012hits} & 2012 & English, Spanish, Chinese&\xmark&\xmark\\\midrule
-%		
-%		THD \cite{THD-dojchinovski2012recognizing}  & 2012 &English, German, Dutch&\xmark&\cmark\\\midrule 
-%        
-%        \textcolor{blue}{Cassidy et al.}~\cite{Cassidy2012} & 2012  &English, Chinese&\cmark \xmark\\\midrule 
-		
-		\textit{DBpedia Spotlight}~\cite{daiber2013improving} & 2013  &English, Italian, Russian, Dutch, French,& \cmark\\
-		& &German, Spanish, Hungarian, Danish&&\\\midrule
-%		
-%		Wang-Tang \cite{wang2013boosting} & 2013 & English, Chinese&\xmark&\xmark\\\midrule
-%		
-%		MAG \cite{mag2017}& 2014 & English, German, Spanish&\xmark&\cmark\\
-%		& &French, Italian, Japanese,&&&\\
-%		& &Dutch&&&\\\midrule
-%		
-		\textit{Babelfy} \cite{Babelfy-moro2014entity}& 2014 &English, Spanish, French, German, Italian & \cmark\\\midrule
-%		
-%		WikiME \cite{Cross-Lingual-Wikifier-tsai2016cross} & 2016 & English, Spanish, French,&\xmark&\xmark\\
-%		& &Italian, Chinese, German,&&&\\
-%		& &Thai, Arabic, Turkish,&&&\\
-%		& &Tamil, Tagalog, Urdu, Hebrew&&&\\\midrule		
-%        
-        \textit{FREME}~\cite{freme-ner2016}&2016&English, German&\cmark\\
-		%& &French, Spanish, Russian&&&\\\midrule
-%		
-%		FEL~\cite{FEL-pappu2017lightweight}& 2017 &English, Spanish, Chinese&\xmark&\xmark\\
-%
-%		%&2016&IDIOMAS&\cmark&\cmark&\cmark\\
-		%& & French, Dutch &&&\\
-		\bottomrule
-	\end{tabular}
-\end{table}
+%		\textit{DBpedia Spotlight}~\cite{daiber2013improving} & 2013  &English, Italian, Russian, Dutch, French,& \cmark\\
+%		& &German, Spanish, Hungarian, Danish&&\\\midrule
+%%		
+%%		Wang-Tang \cite{wang2013boosting} & 2013 & English, Chinese&\xmark&\xmark\\\midrule
+%%		
+%%		MAG \cite{mag2017}& 2014 & English, German, Spanish&\xmark&\cmark\\
+%%		& &French, Italian, Japanese,&&&\\
+%%		& &Dutch&&&\\\midrule
+%%		
+%		\textit{Babelfy} \cite{Babelfy-moro2014entity}& 2014 &English, Spanish, French, German, Italian & \cmark\\\midrule
+%%		
+%%		WikiME \cite{Cross-Lingual-Wikifier-tsai2016cross} & 2016 & English, Spanish, French,&\xmark&\xmark\\
+%%		& &Italian, Chinese, German,&&&\\
+%%		& &Thai, Arabic, Turkish,&&&\\
+%%		& &Tamil, Tagalog, Urdu, Hebrew&&&\\\midrule		
+%%        
+%        \textit{FREME}~\cite{freme-ner2016}&2016&English, German&\cmark\\
+%		%& &French, Spanish, Russian&&&\\\midrule
+%%		
+%%		FEL~\cite{FEL-pappu2017lightweight}& 2017 &English, Spanish, Chinese&\xmark&\xmark\\
+%%
+%%		%&2016&IDIOMAS&\cmark&\cmark&\cmark\\
+%		%& & French, Dutch &&&\\
+%		\bottomrule
+%	\end{tabular}
+%\end{table}
 
 %Instead of adding complexity to monolingual models in order to deal with a multilingual environment, others authors take advantage of machine translation to deal with several languages. For instance, Monahan et al.~\cite{Monahan2011} use Bing API\footnote{\url{http://www.microsofttranslator.com/dev/}; June 1st, 2018.} to translate the input text from Chinese to English, while Cassidy et al.~\cite{Cassidy2012} apply EL over Chinese using coreference resolution, various name translation techniques over the entity mentions to English, and machine translation to English. The use of machine translation brings advantages. In this way, monolingual systems deal with all the languages supported by the translator tool, which usually include the most popular languages in the world. Another advantage is that it is not necessary to deal with transliterations or cross-language links in cases when the target KB is available in a different language than the input text. 
 
-\section{VoxEL: A Multilingual EL Benchmark}
+%\section{VoxEL: A Multilingual EL Benchmark}
 
 
-Evaluating multilingual EL systems requires benchmark datasets with texts in various languages. To further compare the performance of EL across languages -- not just systems -- we need (insofar as possible) the same text and annotations in the different languages. Only a few such datasets have been proposed: TAC KBP\footnote{\url{https://tac.nist.gov/2017/KBP/}; June 1st, 2018.}, SemEval\footnote{\url{http://alt.qcri.org/semeval2018/}; June 1st, 2018.}, and MEANTIME~\cite{meantime16}. However, MEANTIME~\cite{meantime16} is the only publicly available dataset; SemEval is published by a third-party whereas the TAC KBP dataset we could not acquire. Furthermore, we found that these datasets exhibit differences in their annotations for different languages. For a more detailed explanation of multilingual benchmark datasets see~\cite{ourISWC} and for results comparing various EL systems over the SemEval dataset, see~\cite{ourLD4ID2017}.
+Evaluating multilingual EL systems requires benchmark datasets with texts in various languages. To further compare the quality of EL results across languages -- not just systems -- we need (insofar as possible) the same text and annotations in the different languages. Only a few such datasets have been proposed: TAC KBP\footnote{\url{https://tac.nist.gov/2017/KBP/}; June 1st, 2018.}, SemEval\footnote{\url{http://alt.qcri.org/semeval2018/}; June 1st, 2018.}, and MEANTIME~\cite{meantime16}. However, MEANTIME~\cite{meantime16} is the only publicly available dataset; SemEval is published by a third-party whereas the TAC KBP dataset we could not acquire. Furthermore, we found that these datasets exhibit differences in their annotations for different languages. For a more detailed explanation of multilingual benchmark datasets see~\cite{ourISWC} and for results comparing various EL systems over the SemEval dataset, see~\cite{ourLD4ID2017}.
 
-To support multilingual EL evaluation, in~\cite{ourISWC} we proposed VoxEL: a curated text extracted from VoxEurop\footnote{\url{http://www.voxeurop.eu}; June 1st, 2018.} and manually annotated for EL benchmarking. This dataset contains 15 documents for each of the five supported languages: Germany, English, Spanish, French and Italian. To support comparison across languages, VoxEL was edited to remove variances in translation and ensure the same annotations per sentence across languages. Given a lack of consensus of the definition of ``entity'', VoxEL features two annotated version of the documents for each language: one \textit{strict} that includes entities referring to person, places and organisation, and other \textit{relaxed} that includes links to all unambiguous pages of Wikipedia. Per language, VoxEL contains 237 and 635 annotations in the strict and relaxed version respectively.
+To support multilingual EL evaluation, in~\cite{ourISWC} we proposed VoxEL: a curated text extracted from the multilingual VoxEurop news site\footnote{\url{http://www.voxeurop.eu}; June 1st, 2018.} and manually annotated for EL benchmarking. This dataset contains 15 documents for each of the five supported languages: Germany, English, Spanish, French and Italian. To support comparison across languages, VoxEL was edited to ensure the same annotations per sentence across languages, normalising variances across languages. Given a lack of consensus on the definition of ``entity'', VoxEL features two annotated version of the documents for each language: one \textit{strict} that includes entities referring to people, places and organisations, and \textit{relaxed} that includes links to all unambiguous pages of Wikipedia. Per language, VoxEL contains 237 and 635 annotations in the strict and relaxed version respectively.
 
 %-----------------------------------------
 \section{Experiments}
 
-We conduct experiments using VoxEL to compare the behaviour of the multilingual EL systems in Table~\ref{tab:multilingual_approaches} for the five different languages offered by the dataset: German (DE), English (EN), Spanish (ES), French (FR) and Italian (IT). All systems were configured with their default parameters, except in the case of Babelfy, which allows to select a more strict or more relaxed notion of entity; we study the performance of both, denoted henceforth as Babelfy$_S$ and Babelfy$_R$ respectively. Aside from testing EL over the text in its native language, we also include results for EL applying machine translation -- namely Google Translator\footnote{\url{https://translate.google.com}; June 1st, 2018.} -- from each language of VoxEL to the other four languages; the purpose of this approach is to simulate an EL approach supporting one language and see if EL performs competitively when input text is translated from other languages. 
+We conduct experiments using VoxEL to compare the behaviour of the four aforementioned multilingual EL systems for the five different languages offered by the dataset: German (DE), English (EN), Spanish (ES), French (FR) and Italian (IT). All systems were configured with their default parameters, except Babelfy, which allows to select a more strict or more relaxed notion of entity; we study the performance of both, denoted henceforth as Babelfy$_S$ and Babelfy$_R$ respectively. Aside from testing EL over the text in its native language, we also include results for EL applying machine translation -- namely Google Translate\footnote{\url{https://translate.google.com}; June 1st, 2018.} -- from each language of VoxEL to the other four languages; the purpose of this approach is to simulate an EL approach supporting one language and see if EL performs competitively when input text is translated from other languages. 
 
-The results of the experiments are given in Table~\ref{tab:expriments}, where we present the $F_1$-measure for various configurations. On the left we present the system and language configured. At the top of the table we present the Relaxed and Strict versions of the dataset, where for each version, we present the language of the input language, which is translated to the configured language; for example, the row \textit {ES}, column \textit{DE$\rightarrow{}\_t$}, gives the result for a German input text translated to Spanish and processed by the given EL systems configured for Spanish. Where the input and translated languages coincide, we use the input text directly (these non-translated results are indicated with boxes). The best result per row for each dataset version is presented in bold. TagME only supports English and German languages so we omit other results.
+The results of the experiments are given in Table~\ref{tab:expriments}, where we present the $F_1$-measure for various configurations. On the left we present the system and language configured. At the top of the table we present the Relaxed and Strict versions of the dataset, where for each version, we present the language of the input text, which is machine translated to the configured language; for example, the row \textit {ES}, column \textit{DE$\rightarrow{}\_t$}, gives the result for a German input text translated to Spanish and processed by the given EL systems configured for Spanish. Where input and translated languages coincide, we use the input text directly (such results are indicated with boxes). The best result per row for each dataset version is presented in bold. Note that TagME supports English and German only.
 
-\begin{table}[th!]
+\begin{table}[t!]
 	\centering
 	\caption{Comparison of EL systems for native and translated texts (F$_1$ measure)}
 	\label{tab:expriments}
@@ -209,9 +211,9 @@ The results of the experiments are given in Table~\ref{tab:expriments}, where we
 
 \section{Discussion}
 
-In Table~\ref{tab:expriments}, we would expect boxed (non-translated) and bold (best) results to correspond. While this is generally the case for DBpedia Spotlight and FREME; it is not the case for Babelfy, which curiously performs slightly better sometimes over machine translated texts in a given language; however, the margins here are slight. On the other hand, reading down the columns, for DBpedia Spotlight, FREME and TagME, these systems clearly perform better for non-English inputs when the text is machine translated to English rather than inputting the text directly and configuring the system for that language. This suggests that machine translation makes little difference in the case of Babelfy, but markedly improves the performance of other systems when dealing with non-English texts; the reasons for this may include the quality of language-specific components, the richness of KB information available for a particular language, etc. 
+In Table~\ref{tab:expriments}, we would expect boxed (non-translated) and bold (best) results to correspond. While this is generally the case for DBpedia Spotlight and FREME; it is not the case for Babelfy, which (curiously) sometimes performs slightly better over machine translated texts in a given language; however, the margins here are slight. On the other hand, reading down the columns, for DBpedia Spotlight, FREME and TagME, these systems clearly perform better for non-English inputs when the text is machine translated to English rather than inputting the text directly and configuring the system for that language. This suggests that machine translation makes little difference in the case of Babelfy, but markedly improves the performance of other systems when dealing with non-English texts; the reasons for this may include the quality of language-specific components, the richness of KB information available for a particular language, etc. 
 
-Furthermore, it is important to note in such cases that the output of the EL process after translation is still in the translated text; e.g., if we process text in French by translating it to English and performing EL configured for English, we get better results, but output a text in English rather than French. But we put forward that given a high(er) quality annotation in the translated English text, and a sentence-to-sentence correspondence between the French and translated English text, and cross-language links provided by KBs, it would not be difficult to ``transfer'' the annotations back to the original French text. 
+Furthermore, it is important to note in such cases that the output of the EL process after translation is still in the translated text; e.g., if we process text in French by translating it to English and performing EL configured for English, we get better results, but output a text in English rather than French. But we put forward that given (1) a high(er) quality annotation in the translated English text, (2) a sentence-to-sentence correspondence between the French and translated English text, and (3) cross-language links provided by KBs; it would not be difficult to ``transfer'' the annotations back to the original French text. 
 
 In any case, these results raise the question of what role machine translation should play for EL, and indeed, in what circumstances it makes sense to develop multilingual EL systems, and in what circumstances it makes sense to develop monolingual EL systems with \textit{a priori} translation. We believe that such issues would be interesting to discuss in the context of the poster session.
 
