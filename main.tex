@@ -55,7 +55,7 @@
 
 \begin{document}
 
-\title{Machine Translation vs.\\Multilingual Entity Linking}
+\title{Machine Translation vs. Multilingual Approaches for Entity Linking}
 %
 %
 \author{Henry Rosales-M\'endez, Aidan Hogan and Barbara Poblete}
@@ -162,7 +162,7 @@ A multilingual EL system is characterised by being configurable for multiple inp
 
 Evaluating multilingual EL systems requires benchmark datasets with texts in various languages. To further compare the quality of EL results across languages -- not just systems -- we need (insofar as possible) the same text and annotations in the different languages. Only a few such datasets have been proposed: TAC KBP\footnote{\url{https://tac.nist.gov/2017/KBP/}; June 1st, 2018.}, SemEval\footnote{\url{http://alt.qcri.org/semeval2018/}; June 1st, 2018.}, and MEANTIME~\cite{meantime16}. However, MEANTIME~\cite{meantime16} is the only publicly available dataset; SemEval is published by a third-party whereas the TAC KBP dataset we could not acquire. Furthermore, we found that these datasets exhibit differences in their annotations for different languages. For a more detailed explanation of multilingual benchmark datasets see~\cite{ourISWC} and for results comparing various EL systems over the SemEval dataset, see~\cite{ourLD4ID2017}.
 
-To support multilingual EL evaluation, in~\cite{ourISWC} we proposed VoxEL: a curated text extracted from the multilingual VoxEurop news site\footnote{\url{http://www.voxeurop.eu}; June 1st, 2018.} and manually annotated for EL benchmarking. This dataset contains 15 documents for each of the five supported languages: Germany, English, Spanish, French and Italian. To support comparison across languages, VoxEL was edited to ensure the same annotations per sentence across languages, normalising variances across languages. Given a lack of consensus on the definition of ``entity'', VoxEL features two annotated version of the documents for each language: one \textit{strict} that includes entities referring to people, places and organisations, and \textit{relaxed} that includes links to all unambiguous pages of Wikipedia. Per language, VoxEL contains 237 and 635 annotations in the strict and relaxed version respectively.
+To support multilingual EL evaluation, in~\cite{ourISWC} we proposed VoxEL: a curated text extracted from the multilingual VoxEurop news site\footnote{\url{http://www.voxeurop.eu}; June 1st, 2018.} and manually annotated for EL benchmarking. This dataset contains 15 documents for each of the five supported languages: Germany, English, Spanish, French and Italian. To support comparison across languages, VoxEL was edited to ensure the same annotations per sentence across languages, normalising variances across languages. Given a lack of consensus on the definition of ``entity'', VoxEL features two annotated version of the documents for each language: one \textit{strict} that includes entities referring to people, places and organisations, and \textit{relaxed} that includes links to all unambiguous pages of Wikipedia. Per language, VoxEL contains 204 and 674 annotations in the strict and relaxed version respectively.
 
 %-----------------------------------------
 \section{Experiments}
