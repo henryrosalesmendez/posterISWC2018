@@ -49,7 +49,6 @@
 
 \usepackage{booktabs}
 \usepackage{amssymb}% http://ctan.org/pkg/amssymb
-\usepackage{soul}
 \usepackage{soul} %underline
 \newcommand{\bl}[1]{\textbf{#1}}
 
@@ -169,7 +168,7 @@ To support multilingual EL evaluation, in~\cite{ourISWC} we proposed VoxEL: a cu
 
 We conduct experiments using VoxEL to compare the behaviour of the four aforementioned multilingual EL systems for the five different languages offered by the dataset: German (DE), English (EN), Spanish (ES), French (FR) and Italian (IT). All systems were configured with their default parameters, except Babelfy, which allows to select a more strict or more relaxed notion of entity; we study the performance of both, denoted henceforth as Babelfy$_S$ and Babelfy$_R$ respectively. Aside from testing EL over the text in its native language, we also include results for EL applying machine translation -- namely Google Translate\footnote{\url{https://translate.google.com}; June 1st, 2018.} -- from each language of VoxEL to the other four languages; the purpose of this approach is to simulate an EL approach supporting one language and see if EL performs competitively when input text is translated from other languages. 
 
-The results of the experiments are given in Table~\ref{tab:expriments}, where we present the $F_1$-measure for various configurations. On the left we present the system and language configured. At the top of the table we present the Relaxed and Strict versions of the dataset, where for each version, we present the language of the input text, which is machine translated to the configured language; for example, row $\rightarrow \textit{ES}$, column \textit{DE $\rightarrow$}, gives the result for a German input text translated to Spanish (\textit{DE $\rightarrow$ ES}) and processed by the given EL systems configured for Spanish. Where input and translated languages coincide, we use the input text directly (such results are indicated with boxes). The best result per row for each dataset version is presented in bold. TagME supports English and German only.
+The results of the experiments are given in Table~\ref{tab:expriments}, where we present the $F_1$-measure for various configurations. On the left we present the system and language configured. At the top of the table we present the Relaxed and Strict versions of the dataset, where for each version, we present the language of the input text, which is machine translated to the configured language; for example, row $\rightarrow \textit{ES}$, column \textit{DE $\rightarrow$}, gives the result for a German input text translated to Spanish (\textit{DE $\rightarrow$ ES}) and processed by the given EL systems configured for Spanish. Where input and translated languages coincide, we use the input text directly (such results are indicated with boxes). The best result per \textcolor{red}{\st{row}}\textcolor{blue}{column} for each dataset version \textcolor{blue}{and system} is presented in bold. TagME supports English and German only.
 
 \begin{table}[t!]
 	\centering
@@ -182,28 +181,33 @@ The results of the experiments are given in Table~\ref{tab:expriments}, where we
 			&& \multicolumn{5}{c}{Relaxed} & \multicolumn{5}{c}{Strict}\\ \midrule
 			&&DE $\rightarrow$&EN $\rightarrow$&ES $\rightarrow$&FR $\rightarrow$&IT $\rightarrow$&DE $\rightarrow$&EN $\rightarrow$&ES $\rightarrow$&FR $\rightarrow$&IT $\rightarrow$\\
 			\cmidrule(lr){3-7}\cmidrule(lr){8-12}
-			                &$\rightarrow DE$&~\fbox{\bf 0.523}~&~0.498~&~0.495~&~0.492~&~0.490~  &~\fbox{0.344}~&~0.342~&~0.365~&~{\bf 0.369}~&~0.367~\\
-			                &$\rightarrow EN$&~0.508~&~\fbox{\bf 0.545}~&~0.515~&~0.506~&~0.502~  &~0.299~&~\fbox{\bf 0.319}~&~0.299~&~0.315~&~0.301~\\
-            Babelfy$_R$~~~~~&$\rightarrow ES$&~0.525~&~{\bf 0.558}~&~\fbox{0.541}~&~0.552~&~0.548~  &~0.344~&~0.356~&~\fbox{\bf 0.362}~&~0.357~&~0.348~\\
-                            &$\rightarrow FR$&~0.493~&~0.485~&~{\bf 0.502}~&~\fbox{0.493}~&~0.493~  &~0.332~&~0.331~&~{\bf 0.342}~&~\fbox{0.309}~&~0.341~\\
-                            &$\rightarrow IT$&~0.513~&~0.527~&~0.512~&~{\bf 0.533}~&~\fbox{0.504}~  &~0.366~&~{\bf 0.379}~&~0.377~&~0.378~&~\fbox{0.365}~\\\midrule
-                            &$\rightarrow DE$&~\fbox{0.279}~&~0.271~&~0.275~&~{\bf 0.285}~&~0.273~  &~\fbox{0.572}~&~0.584~&~0.589~&~{\bf 0.606}~&~0.588~\\
-			                &$\rightarrow EN$&~0.312~&~\fbox{0.308}~&~0.309~&~{\bf 0.323}~&~0.304~  &~0.518~&~\fbox{\bf 0.567}~&~0.523~&~0.559~&~0.533~\\
-            Babelfy$_S$~~~~~&$\rightarrow ES$&~0.318~&~0.327~&~\fbox{0.325}~&~0.334~&~{\bf 0.336}~  &~0.577~&~0.607~&~\fbox{\bf 0.611}~&~0.610~&~0.590~\\
-                            &$\rightarrow FR$&~0.301~&~0.299~&~{\bf 0.312}~&~\fbox{0.290}~&~0.310~  &~0.574~&~0.601~&~{\bf 0.608}~&~\fbox{0.583}~&~0.606~\\
-                            &$\rightarrow IT$&~0.306~&~0.319~&~0.318~&~{\bf 0.321}~&~\fbox{0.311}~  &~0.604~&~0.634~&~{\bf 0.640}~&~0.638~&~\fbox{0.616}~\\\midrule
-                            &$\rightarrow DE$&~\fbox{\bf 0.400}~&~0.139~&~0.177~&~0.155~&~0.166~  &~\fbox{\bf 0.510}~&~0.220~&~0.292~&~0.248~&~0.280~\\
-			                &$\rightarrow EN$&~0.442~&~\fbox{\bf 0.466}~&~0.454~&~0.465~&~0.450~  &~0.697~&~\fbox{0.707}~&~0.695~&~0.722~&~{\bf 0.730}~\\
-            DBpedia Spotlight&$\rightarrow ES$&~0.159~&~0.121~&~\fbox{\bf 0.373}~&~0.130~&~0.199~  &~0.292~&~0.209~&~\fbox{\bf 0.513}~&~0.234~&~0.350~\\
-                            &$\rightarrow FR$&~0.176~&~0.177~&~0.181~&~\fbox{\bf 0.314}~&~0.180~  &~0.245~&~0.252~&~0.252~&~\fbox{\bf 0.464}~&~0.255~\\
-                            &$\rightarrow IT$&~0.184~&~0.163~&~0.221~&~0.158~&~\fbox{\bf 0.382}~  &~0.272~&~0.219~&~0.335~&~0.223~&~\fbox{\bf 0.601}~\\\midrule
-                            &$\rightarrow DE$&~\fbox{\bf 0.282}~&~0.072~&~0.132~&~0.114~&~0.160~  &~\fbox{\bf 0.483}~&~0.154~&~0.240~&~0.179~&~0.261~\\
-			                &$\rightarrow EN$&~0.401~&~\fbox{\bf 0.407}~&~0.402~&~0.397~&~0.406~  &~0.700~&~\fbox{0.708}~&~{\bf 0.715}~&~0.694~&~0.713~\\
-            FREME    ~~~~~~ &$\rightarrow ES$&~0.174~&~0.117~&~\fbox{\bf 0.302}~&~0.147~&~0.232~  &~0.319~&~0.231~&~\fbox{\bf 0.583}~&~0.269~&~0.417~\\
-                            &$\rightarrow FR$&~0.167~&~0.143~&~0.169~&~\fbox{\bf 0.268}~&~0.214~  &~0.287~&~0.278~&~0.314~&~\fbox{\bf 0.483}~&~0.322~\\
-                            &$\rightarrow IT$&~0.164~&~0.127~&~0.205~&~0.136~&~\fbox{\bf 0.373}~  &~0.321~&~0.253~&~0.413~&~0.256~&~\fbox{\bf 0.726}~\\\midrule
-           \multirow{2}{*}{TagME}                 &$\rightarrow DE$&~\fbox{\bf 0.414}~&~0.100~&~0.127~&~0.119~&~0.124~  &~\fbox{\bf 0.272}~&~0.122~&0.153&~0.137~&~0.152~\\
-			                &$\rightarrow EN$&~0.432~&~\fbox{\bf 0.462}~&~0.450~&~0.442~&~0.440~  &~0.331~&~\fbox{0.327}~&~0.334~&~0.321~&~{\bf 0.336}~\\\bottomrule 
+			                &$\rightarrow DE$&~\fbox{0.523}~&~0.498~       &~0.495~           &~0.492~       &~0.490~       &~\fbox{0.344}~&~0.342~       &~0.365~       &~ 0.369~      &~{\bf 0.367}~\\
+			                &$\rightarrow EN$&~0.508~       &~\fbox{0.545}~&~0.515~           &~0.506~       &~0.502~       &~0.299~       &~\fbox{0.319}~&~0.299~       &~0.315~       &~0.301~\\
+            Babelfy$_R$~~~~~&$\rightarrow ES$&~{\bf 0.525}~ &~{\bf 0.558}~ &~\fbox{\bf 0.541}~&~{\bf 0.552}~ &~{\bf 0.548}~ &~0.344~       &~0.356~       &~\fbox{0.362}~&~0.357~       &~0.348~\\
+                            &$\rightarrow FR$&~0.493~       &~0.485~       &~0.502~           &~\fbox{0.493}~&~0.493~       &~0.332~       &~0.331~       &~0.342~       &~\fbox{0.309}~&~0.341~\\
+                            &$\rightarrow IT$&~0.513~       &~0.527~       &~0.512~           &~0.533~       &~\fbox{0.504}~&~{\bf 0.366}~ &~{\bf 0.379}~ &~{\bf 0.377}~ &~{\bf 0.378}~ &~\fbox{0.365}~
+                            \\\midrule
+                            &$\rightarrow DE$&~\fbox{0.279}~&~0.271~       &~0.275~           &~0.285~       &~0.273~       &~\fbox{0.572}~&~0.584~       &~0.589~       &~0.606~       &~0.588~\\
+			                &$\rightarrow EN$&~0.312~       &~\fbox{0.308}~&~0.309~           &~0.323~       &~0.304~       &~0.518~       &~\fbox{0.567}~&~0.523~       &~0.559~       &~0.533~\\
+            Babelfy$_S$~~~~~&$\rightarrow ES$&~{\bf 0.318}~ &~{\bf 0.327}~ &~\fbox{\bf 0.325}~&~{\bf 0.334}~ &~{\bf 0.336}~ &~0.577~       &~0.607~       &~\fbox{0.611}~&~0.610~       &~0.590~\\
+                            &$\rightarrow FR$&~0.301~       &~0.299~       &~ 0.312~          &~\fbox{0.290}~&~0.310~       &~0.574~       &~0.601~       &~0.608~       &~\fbox{0.583}~&~0.606~\\
+                            &$\rightarrow IT$&~0.306~       &~0.319~       &~0.318~           &~0.321~       &~\fbox{0.311}~&~{\bf 0.604}~ &~{\bf 0.634}~ &~{\bf 0.640}~ &~{\bf 0.638}~ &~\fbox{\bf 0.616}~
+                            \\\midrule
+                            &$\rightarrow DE$&~\fbox{0.400}~&~0.139~       &~0.177~           &~0.155~       &~0.166~       &~\fbox{0.510}~&~0.220~       &~0.292~       &~0.248~       &~0.280~\\
+			                &$\rightarrow EN$&~{\bf 0.442} ~&~\fbox{\bf 0.466}~&~{\bf 0.454}~ &~{\bf 0.465}~ &~{\bf0.450}~  &~{\bf 0.697}~ &~\fbox{\bf 0.707}~&~{\bf 0.695}~&~{\bf 0.722}~&~{\bf 0.730}~\\
+            DBpedia Spotlight&$\rightarrow ES$&~0.159~      &~0.121~       &~\fbox{0.373}~    &~0.130~       &~0.199~       &~0.292~       &~0.209~       &~\fbox{0.513}~&~0.234~       &~0.350~\\
+                            &$\rightarrow FR$&~0.176~       &~0.177~       &~0.181~           &~\fbox{0.314}~&~0.180~       &~0.245~       &~0.252~       &~0.252~       &~\fbox{0.464}~&~0.255~\\
+                            &$\rightarrow IT$&~0.184~       &~0.163~       &~0.221~           &~0.158~       &~\fbox{0.382}~&~0.272~       &~0.219~       &~0.335~       &~0.223~       &~\fbox{0.601}~
+                            \\\midrule
+                            &$\rightarrow DE$&~\fbox{0.282}~&~0.072~       &~0.132~           &~0.114~       &~0.160~       &~\fbox{0.483}~&~0.154~       &~0.240~       &~0.179~       &~0.261~\\
+			                &$\rightarrow EN$&~{\bf 0.401}~ &~\fbox{\bf 0.407}~&~{\bf 0.402}~ &~{\bf 0.397}~ &~{\bf 0.406}~ &~{\bf 0.700}~ &~\fbox{\bf 0.708}~&~{\bf 0.715}~&~{\bf 0.694}~&~0.713~\\
+            FREME    ~~~~~~ &$\rightarrow ES$&~0.174~       &~0.117~       &~\fbox{0.302}~    &~0.147~       &~0.232~       &~0.319~       &~0.231~       &~\fbox{0.583}~&~0.269~       &~0.417~\\
+                            &$\rightarrow FR$&~0.167~       &~0.143~       &~0.169~           &~\fbox{0.268}~&~0.214~       &~0.287~       &~0.278~       &~0.314~       &~\fbox{0.483}~&~0.322~\\
+                            &$\rightarrow IT$&~0.164~       &~0.127~       &~0.205~           &~0.136~       &~\fbox{0.373}~&~0.321~       &~0.253~       &~0.413~       &~0.256~       &~\fbox{\bf 0.726}~
+                            \\\midrule
+           \multirow{2}{*}{TagME}
+                            &$\rightarrow DE$&~\fbox{0.414}~&~0.100~       &~0.127~           &~0.119~       &~0.124~       &~\fbox{0.272}~&~0.122~       &0.153         &~0.137~       &~0.152~\\
+			                &$\rightarrow EN$&~{\bf 0.432}~ &~\fbox{\bf 0.462}~&~{\bf 0.450}~ &~{\bf 0.442}~ &~{\bf 0.440}~ &~{\bf 0.331}~ &~\fbox{\bf 0.327}~&~{\bf 0.334}~&~{\bf 0.321}~&~{\bf 0.336}~\\\bottomrule 
 		\end{tabular}%
 	}
 \end{table}
@@ -211,7 +215,8 @@ The results of the experiments are given in Table~\ref{tab:expriments}, where we
 
 \section{Discussion}
 
-In Table~\ref{tab:expriments}, we would expect boxed (non-translated) and bold (best) results to correspond. While this is generally the case for DBpedia Spotlight and FREME; it is not the case for Babelfy, which (curiously) sometimes performs slightly better over machine translated texts in a given language; however, the margins here are slight. On the other hand, reading down the columns, for DBpedia Spotlight, FREME and TagME, these systems clearly perform better for non-English inputs when the text is machine translated to English rather than inputting the text directly and configuring the system for that language. This suggests that machine translation makes little difference in the case of Babelfy, but markedly improves the performance of other systems when dealing with non-English texts; the reasons for this may include the quality of language-specific components, the richness of KB information available for a particular language, etc. 
+In Table~\ref{tab:expriments}, we would expect boxed (non-translated) and bold (best) results to correspond. 
+\textcolor{red}{\st{While this is generally the case for DBpedia Spotlight and FREME; it is not the case for Babelfy, which}} \textcolor{blue}{However, in the majority of the cases the systems} (curiously) \textcolor{red}{\st{sometimes}} perform\textcolor{red}{\st{s}} slightly better over machine translated texts in a given language\textcolor{blue}{.} \textcolor{red}{\st{; however, the margins here are slight. On the other hand, reading down the columns, for}} \textcolor{blue}{For instance,} DBpedia Spotlight, FREME and TagME, \textcolor{red}{\st{these systems}} clearly perform better for non-English inputs when the text is machine translated to English rather than inputting the text directly and configuring the system for that language. This suggests that machine translation makes little difference in the case of Babelfy, but markedly improves the performance of other systems when dealing with non-English texts; the reasons for this may include the quality of language-specific components, the richness of KB information available for a particular language, etc. 
 
 It is important to highlight in such cases that the output of the EL process after translation is still in the translated language; e.g., if we process text in French by translating it to English and performing EL configured for English, we may get better results, but output a text in English, not French. But we put forward that given (1) a high(er) quality annotation in the translated English text, (2) a sentence-to-sentence correspondence between the French and translated English text, and (3) cross-language links provided by KBs; it would not be difficult to ``transfer'' the annotations back to the original French text. 
 
